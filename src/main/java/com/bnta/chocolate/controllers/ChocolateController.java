@@ -18,9 +18,14 @@ public class ChocolateController {
     @Autowired
     ChocolateRepository chocolateRepository;
 
-    @GetMapping
-    public ResponseEntity<List<Chocolate>> getAllChocolates(){
-        return new ResponseEntity<>(chocolateRepository.findAll(), HttpStatus.OK);
+//    @GetMapping
+//    public ResponseEntity<List<Chocolate>> getAllChocolates(){
+//        return new ResponseEntity<>(chocolateRepository.findAll(), HttpStatus.OK);
+//    }
+    @GetMapping //localhost:8080/pets?type=dog
+    public ResponseEntity<List<Chocolate>> getAllChocolatesOfPercentage(
+            @RequestParam(name= "cocoaPercentage") int cocoaPercentage){
+        return new ResponseEntity<>(chocolateRepository.findByCocoaPercentageGreaterThanEqual(cocoaPercentage), HttpStatus.OK);
     }
 
     //SHOW
