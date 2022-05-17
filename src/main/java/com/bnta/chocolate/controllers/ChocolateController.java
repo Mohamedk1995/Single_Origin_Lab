@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping("chocolates")
 public class ChocolateController {
@@ -22,11 +23,22 @@ public class ChocolateController {
 //    public ResponseEntity<List<Chocolate>> getAllChocolates(){
 //        return new ResponseEntity<>(chocolateRepository.findAll(), HttpStatus.OK);
 //    }
-    @GetMapping //localhost:8080/pets?type=dog
-    public ResponseEntity<List<Chocolate>> getAllChocolatesOfPercentage(
-            @RequestParam(name= "cocoaPercentage") int cocoaPercentage){
-        return new ResponseEntity<>(chocolateRepository.findByCocoaPercentageGreaterThanEqual(cocoaPercentage), HttpStatus.OK);
+//    @GetMapping //localhost:8080/pets?type=dog
+//    public ResponseEntity<List<Chocolate>> getAllChocolatesOfPercentage(
+//            @RequestParam(name= "cocoaPercentage") int cocoaPercentage){
+//        return new ResponseEntity<>(chocolateRepository.findByCocoaPercentageGreaterThanEqual(cocoaPercentage), HttpStatus.OK);
+//    }
+
+    @GetMapping //localhost:8080/chocolates
+    public ResponseEntity<List<Chocolate>> getAllChocolatesAndFilters(
+            @RequestParam(required = false, name = "cocoaPercentage") Integer cocoaPercentage
+    ){
+        if(cocoaPercentage != null){
+            return new ResponseEntity<>(chocolateRepository.findByCocoaPercentageGreaterThanEqual(cocoaPercentage), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(chocolateRepository.findAll(), HttpStatus.OK);
     }
+
 
     //SHOW
     @GetMapping(value ="/{id}")// localhost:8080/chocolates/1
